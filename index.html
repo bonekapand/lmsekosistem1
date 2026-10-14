@@ -1,0 +1,3634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LMS Projek IPAS - Jenis Ekosistem</title>
+
+<style>
+
+/* =====================================================
+   DASAR
+===================================================== */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:280px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    overflow-y:auto;
+    z-index:1000;
+}
+
+.sidebar-header{
+    padding:24px 20px;
+    background:#1f2937;
+    border-bottom:1px solid #374151;
+}
+
+.sidebar-header h2{
+    margin:0;
+    font-size:20px;
+}
+
+.sidebar-header p{
+    margin:8px 0 0;
+    font-size:13px;
+    color:#cbd5e1;
+    line-height:1.5;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu{
+    padding:15px 10px;
+}
+
+.menu-title{
+    padding:10px;
+    color:#94a3b8;
+    font-size:12px;
+    text-transform:uppercase;
+    font-weight:bold;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    padding:13px 14px;
+    margin:4px 0;
+    border-radius:8px;
+    color:#e5e7eb;
+    text-decoration:none;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu-item:hover{
+    background:#1f2937;
+}
+
+.menu-item.active{
+    background:#2563eb;
+    color:white;
+}
+
+.menu-item.locked{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.menu-number{
+    width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#374151;
+    font-size:13px;
+    flex-shrink:0;
+}
+
+.menu-item.active .menu-number{
+    background:white;
+    color:#2563eb;
+}
+
+.menu-text{
+    font-size:14px;
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-box{
+    margin:15px;
+    padding:15px;
+    border-radius:10px;
+    background:#1f2937;
+}
+
+.progress-label{
+    font-size:13px;
+    color:#cbd5e1;
+    margin-bottom:10px;
+}
+
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#374151;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:#22c55e;
+    transition:.3s;
+}
+
+.progress-percent{
+    margin-top:8px;
+    text-align:right;
+    font-size:12px;
+    color:#cbd5e1;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+    margin-left:280px;
+    padding:30px;
+    min-height:100vh;
+}
+
+.page-header{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+}
+
+.page-header h1{
+    margin:0;
+    font-size:28px;
+    color:#111827;
+}
+
+.page-header p{
+    margin:8px 0 0;
+    color:#64748b;
+}
+
+
+/* =====================================================
+   LESSON
+===================================================== */
+
+.lesson{
+    background:white;
+    border-radius:14px;
+    margin-bottom:18px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+    overflow:hidden;
+    scroll-margin-top:20px;
+}
+
+.lesson-header{
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    cursor:pointer;
+    border-bottom:1px solid transparent;
+}
+
+.lesson-header:hover{
+    background:#f8fafc;
+}
+
+.lesson.locked .lesson-header{
+    cursor:not-allowed;
+}
+
+.lesson-number{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.lesson.locked .lesson-number{
+    background:#94a3b8;
+}
+
+.lesson.completed .lesson-number{
+    background:#16a34a;
+}
+
+.lesson-title{
+    flex:1;
+}
+
+.lesson-title h3{
+    margin:0 0 4px;
+    font-size:18px;
+}
+
+.lesson-title span{
+    font-size:13px;
+    color:#64748b;
+}
+
+.lesson-status{
+    font-size:12px;
+    color:#64748b;
+    white-space:nowrap;
+}
+
+.lesson-content{
+    display:none;
+    padding:25px;
+    line-height:1.7;
+}
+
+.lesson.open .lesson-content{
+    display:block;
+}
+
+.lesson-content h4{
+    color:#1d4ed8;
+    margin-top:20px;
+}
+
+.lesson-content p{
+    margin:10px 0;
+}
+
+.lesson-content ul{
+    padding-left:25px;
+}
+
+
+/* =====================================================
+   BOX
+===================================================== */
+
+.example-box{
+    background:#eff6ff;
+    border-left:5px solid #2563eb;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+.warning-box{
+    background:#fff7ed;
+    border-left:5px solid #f97316;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+.success-box{
+    background:#f0fdf4;
+    border-left:5px solid #16a34a;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+
+/* =====================================================
+   HOTS
+===================================================== */
+
+.hots-box{
+    margin-top:25px;
+    padding:20px;
+    background:#fff7ed;
+    border:2px solid #fed7aa;
+    border-radius:12px;
+}
+
+.hots-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#c2410c;
+    margin-bottom:12px;
+}
+
+.hots-title h4{
+    margin:0;
+    color:#c2410c;
+}
+
+.hots-question{
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.hots-answer{
+    width:100%;
+    min-height:130px;
+    padding:13px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    resize:vertical;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    line-height:1.6;
+    background:white;
+}
+
+.hots-answer:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+.save-info{
+    margin-top:8px;
+    font-size:12px;
+    color:#64748b;
+}
+
+.save-info.saved{
+    color:#16a34a;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.complete-btn{
+    margin-top:20px;
+    padding:13px 20px;
+    border:0;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.complete-btn:hover{
+    background:#1d4ed8;
+}
+
+.complete-btn.completed{
+    background:#16a34a;
+    cursor:not-allowed;
+}
+
+.complete-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+
+
+/* =====================================================
+   SPECIAL SECTION
+===================================================== */
+
+.special-section{
+    background:white;
+    border-radius:14px;
+    margin-bottom:20px;
+    padding:25px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+    scroll-margin-top:20px;
+}
+
+.special-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.special-title h2{
+    margin:0;
+}
+
+.lock-message{
+    padding:18px;
+    background:#f1f5f9;
+    border-radius:10px;
+    color:#475569;
+}
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+.video-container{
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%;
+    height:0;
+    overflow:hidden;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.video-container iframe{
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    border:0;
+}
+
+.question-box{
+    background:#f8fafc;
+    border-radius:10px;
+    padding:18px;
+    margin:15px 0;
+}
+
+.question-box textarea{
+    width:100%;
+    min-height:90px;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    resize:vertical;
+    font-family:inherit;
+}
+
+
+/* =====================================================
+   LKPD
+===================================================== */
+
+.lkpd-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+.lkpd-table th,
+.lkpd-table td{
+    border:1px solid #cbd5e1;
+    padding:10px;
+    vertical-align:top;
+}
+
+.lkpd-table th{
+    background:#eff6ff;
+}
+
+.lkpd-table input,
+.lkpd-table textarea{
+    width:100%;
+    border:1px solid #cbd5e1;
+    padding:8px;
+    border-radius:6px;
+    font-family:inherit;
+}
+
+.lkpd-table textarea{
+    min-height:70px;
+}
+
+
+
+
+/* GAME MENJODOHKAN */
+.match-instructions{padding:14px 16px;background:#fff7e8;border:1px solid #f4dfb4;border-radius:13px;margin:14px 0 18px;color:#77521a;line-height:1.55;}
+.match-board{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(22px,5vw,68px);padding:8px 2px 14px;isolation:isolate;}
+.match-column{display:flex;flex-direction:column;gap:11px;min-width:0;}
+.match-column h3{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#567366;margin:0 0 3px;}
+.match-card{position:relative;z-index:auto;min-height:66px;display:flex;align-items:center;gap:11px;padding:12px;border:1px solid #d9e7dc;border-radius:13px;background:#fff;box-shadow:0 3px 10px rgba(29,72,49,.045);line-height:1.4;font-size:14px;}
+.match-card .match-text{position:relative;z-index:3;flex:1;min-width:0;text-shadow:-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff,-2px 0 0 #fff,2px 0 0 #fff;}
+.match-dot{position:relative;z-index:4;width:19px;height:19px;flex:0 0 19px;border-radius:50%;border:3px solid #3a9270;background:#e4f6eb;cursor:crosshair;touch-action:none;box-shadow:0 0 0 3px white;}
+.match-dot.target{border-color:#d49a36;background:#fff0cf;}
+.match-dot:focus{outline:3px solid #8bc8a7;outline-offset:2px;}
+.match-lines{position:absolute;inset:0;width:100%;height:100%;z-index:2;overflow:visible;pointer-events:none;}
+.match-lines path{fill:none;stroke:#3a9270;stroke-width:3.5;stroke-linecap:round;opacity:.8;}
+.match-lines path.preview{stroke:#d49a36;stroke-dasharray:7 6;opacity:.95;}
+.match-status{padding:13px 15px;border-radius:12px;margin:14px 0;background:#f0f6f1;color:#345745;}
+.match-status.success{background:#e7f7ec;color:#17603d;border:1px solid #b5e0c2;}
+.match-status.retry{background:#fff4e7;color:#8a4f13;border:1px solid #f2d4ad;}
+.match-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.match-secondary{margin-top:20px;padding:12px 17px;border:1px solid #cbdccf;border-radius:11px;background:#fff;color:#315947;font-weight:700;cursor:pointer;}
+@media(max-width:620px){.match-board{gap:12px;}.match-card{padding:9px 7px;gap:6px;font-size:12px;min-height:82px;}.match-dot{width:17px;height:17px;flex-basis:17px;}.match-column h3{font-size:11px;}.match-lines path{stroke-width:2.5;}}
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+.quiz-question{
+    padding:20px;
+    background:#f8fafc;
+    border-radius:10px;
+    margin-bottom:18px;
+}
+
+.quiz-question h4{
+    margin-top:0;
+}
+
+.option{
+    display:block;
+    padding:10px;
+    margin:7px 0;
+    border:1px solid #dbe2ea;
+    border-radius:7px;
+    cursor:pointer;
+    background:white;
+}
+
+.option:hover{
+    background:#eff6ff;
+}
+
+.option input{
+    margin-right:8px;
+}
+
+.quiz-result{
+    padding:20px;
+    background:#eff6ff;
+    border-radius:10px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    text-align:center;
+}
+
+
+/* =====================================================
+   ACTIVITY
+===================================================== */
+
+.activity-box{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+    margin-top:25px;
+}
+
+.activity-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.activity-item:last-child{
+    border-bottom:0;
+}
+
+.activity-icon{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.activity-item.done .activity-icon{
+    background:#22c55e;
+    color:white;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:800px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .page-header h1{
+        font-size:22px;
+    }
+
+    .lesson-header{
+        padding:14px;
+    }
+
+    .lesson-status{
+        display:none;
+    }
+
+    .lkpd-table{
+        display:block;
+        overflow-x:auto;
+    }
+
+}
+
+
+
+/* =====================================================
+   PENYEGARAN TAMPILAN: TEMA EKSPLORASI ALAM
+===================================================== */
+:root{color-scheme:light;}
+body{background:#f3f7f2;color:#20332d;font-family:Inter,"Segoe UI",Arial,sans-serif;}
+.sidebar{background:linear-gradient(165deg,#123c35 0%,#175b4d 58%,#204c43 100%);box-shadow:8px 0 28px rgba(19,60,53,.10);}
+.sidebar-header{background:transparent;border-bottom:1px solid rgba(255,255,255,.18);padding:28px 22px 24px;}
+.sidebar-header h2{letter-spacing:-.4px;line-height:1.25;}
+.sidebar-header p{color:#c7e4d8;}
+.menu-title{color:#a6cfc0;letter-spacing:1.4px;font-size:10px;}
+.menu-item{border-radius:12px;padding:12px 13px;color:#e5f5ee;transition:background .2s,transform .2s;}
+.menu-item:hover{background:rgba(255,255,255,.12);transform:translateX(2px);}
+.menu-item.active{background:#f0b85a;color:#24392f;box-shadow:0 5px 15px rgba(0,0,0,.12);font-weight:700;}
+.menu-item.active .menu-number{background:#fff;color:#1b5a4c;}
+.menu-number{border-radius:9px;background:rgba(255,255,255,.14);}
+.progress-box{background:rgba(4,28,24,.35);border:1px solid rgba(255,255,255,.13);border-radius:15px;}
+.progress-fill{background:linear-gradient(90deg,#f0b85a,#b9e3a3);}
+.main{padding:32px clamp(16px,3vw,42px);}
+.page-header{position:relative;overflow:hidden;background:linear-gradient(115deg,#155447,#247965 70%,#4a9b78);color:#fff;border-radius:24px;padding:34px 32px;margin-bottom:28px;box-shadow:0 12px 28px rgba(21,84,71,.16);}
+.page-header:after{content:"";position:absolute;width:210px;height:210px;border:28px solid rgba(255,255,255,.09);border-radius:50%;right:-42px;top:-78px;pointer-events:none;}
+.page-header h1{position:relative;z-index:1;color:#fff;font-size:clamp(24px,3vw,34px);letter-spacing:-.7px;}
+.page-header p{position:relative;z-index:1;color:#d9f1e5;font-size:15px;}
+.lesson,.special-section,.activity-box{border:1px solid #e0e9e1;border-radius:18px;box-shadow:0 5px 18px rgba(36,70,51,.055);}
+.lesson{transition:box-shadow .2s,transform .2s;}
+.lesson:hover{box-shadow:0 10px 24px rgba(36,70,51,.09);}
+.lesson-header{padding:20px 22px;}
+.lesson-header:hover{background:#f4faf5;}
+.lesson-number{border-radius:13px;background:#237b62;box-shadow:0 4px 10px rgba(35,123,98,.18);}
+.lesson.completed .lesson-number{background:#3c986b;}
+.lesson-title h3{letter-spacing:-.25px;color:#1c3f34;}
+.lesson-title span{color:#71877c;}
+.lesson-content{padding:clamp(18px,3vw,30px);}
+.lesson-content h4{color:#237b62;}
+.example-box{background:#eaf6ef;border-left-color:#2e9470;border-radius:5px 14px 14px 5px;}
+.warning-box{background:#fff5e5;border-left-color:#e7a33c;border-radius:5px 14px 14px 5px;}
+.success-box{background:#eaf7e9;border-left-color:#63a86d;border-radius:5px 14px 14px 5px;}
+.hots-box{background:#fff8eb;border:1px solid #f1d9a9;border-radius:16px;}
+.hots-title,.hots-title h4{color:#a86619;}
+.hots-answer,.question-box textarea,.lkpd-table input,.lkpd-table textarea{border-color:#d5e2d8;border-radius:11px;}
+.hots-answer:focus,.question-box textarea:focus,.lkpd-table input:focus,.lkpd-table textarea:focus{outline:none;border-color:#369475;box-shadow:0 0 0 3px rgba(54,148,117,.13);}
+.complete-btn{background:#237b62;border-radius:11px;padding:13px 20px;box-shadow:0 5px 12px rgba(35,123,98,.16);transition:transform .15s,background .15s;}
+.complete-btn:hover{background:#155b49;transform:translateY(-1px);}
+.complete-btn.completed{background:#39885e;}
+.special-title h2{color:#1c3f34;}
+.video-container{border-radius:18px;box-shadow:0 8px 24px rgba(18,55,43,.14);}
+.question-box{background:#f5faf5;border:1px solid #e0eae1;border-radius:15px;padding:20px;}
+.question-box strong{line-height:1.65;color:#25483b;}
+.question-box textarea{margin-top:4px;min-height:110px;padding:13px;background:#fff;}
+.lkpd-table th{background:#e8f4eb;color:#25483b;}
+.lkpd-table th,.lkpd-table td{border-color:#d6e4d8;}
+.quiz-question{background:#f5faf5;border:1px solid #e1eae2;border-radius:15px;}
+.option{border-color:#dce7dd;border-radius:10px;}
+.option:hover{background:#eaf6ee;border-color:#a8d4b5;}
+.quiz-result{background:#eaf6ee;border-radius:14px;color:#1c5e46;}
+.lock-message{background:#edf4ef;border:1px dashed #b9d4c1;border-radius:14px;}
+.activity-item{border-bottom-color:#e4ece5;}
+.activity-icon{border-radius:10px;background:#e5eee7;}
+.activity-item.done .activity-icon{background:#3c986b;}
+@media(max-width:800px){.sidebar{background:linear-gradient(120deg,#123c35,#247965);}.main{padding:14px;}.page-header{padding:26px 22px;border-radius:18px;}.lesson-header{padding:15px;}.lesson-content{padding:18px;}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;}}
+
+
+
+/* =====================================================
+   PEMBATASAN SALIN / TEMPEL TEKS
+   Catatan: pembatasan sisi browser, bukan proteksi anti-tamper.
+===================================================== */
+html, body, body *{
+    -webkit-user-select:none !important;
+    user-select:none !important;
+    -webkit-touch-callout:none;
+}
+input, textarea, select{
+    -webkit-user-select:none !important;
+    user-select:none !important;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div id="studentGate" style="position:fixed;inset:0;background:rgba(15,23,42,.88);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <form id="studentForm" style="background:#fff;color:#1f2937;width:min(520px,100%);padding:28px;border-radius:18px;box-shadow:0 20px 60px #0005;">
+    <div style="font-size:34px;text-align:center;">🌿</div>
+    <h2 style="margin:8px 0;text-align:center;">Identitas Peserta Didik</h2>
+    <p style="text-align:center;color:#64748b;margin:0 0 20px;">Isi identitas sebelum mulai agar progres belajar tersimpan dan dapat direkap otomatis di Google Sheets.</p>
+    <label style="display:block;font-weight:700;margin:12px 0 6px;">Nama lengkap</label>
+    <input id="studentName" required maxlength="100" placeholder="Masukkan nama lengkap" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div><label style="display:block;font-weight:700;margin:12px 0 6px;">Kelas</label><input id="studentClass" required maxlength="30" placeholder="Contoh: X TKJ 1" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;"></div>
+      <div><label style="display:block;font-weight:700;margin:12px 0 6px;">No. Absen</label><input id="studentAbsen" required maxlength="10" placeholder="Contoh: 12" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;"></div>
+    </div>
+    <button type="submit" style="width:100%;margin-top:20px;padding:13px;border:0;border-radius:9px;background:#047857;color:white;font-weight:700;font-size:16px;cursor:pointer;">Mulai / Lanjutkan LMS</button>
+    <p style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:0;">Catatan: data tersimpan di browser/perangkat ini. Untuk rekap dari perangkat siswa yang berbeda, diperlukan penyimpanan online terpusat.</p>
+  </form>
+</div>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-header">
+
+        <h2>📚 LMS Projek IPAS</h2>
+
+        <p>
+            SMK Kelas X<br>
+            Jenis Ekosistem
+        </p>
+
+    </div>
+
+
+    <div class="progress-box">
+
+        <div class="progress-label">
+            Progress Pembelajaran
+        </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="progressFill">
+            </div>
+
+        </div>
+
+        <div
+            class="progress-percent"
+            id="progressText">
+            0%
+        </div>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Materi Pembelajaran
+        </div>
+
+
+        <a
+            class="menu-item active"
+            id="menuIndividu"
+            href="#individu">
+
+            <div class="menu-number">
+                1
+            </div>
+
+            <div class="menu-text">
+                Ekosistem dan Komponen
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuPopulasi"
+            href="#populasi">
+
+            <div class="menu-number">
+                2
+            </div>
+
+            <div class="menu-text">
+                Ekosistem Darat
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuKomunitas"
+            href="#komunitas">
+
+            <div class="menu-number">
+                3
+            </div>
+
+            <div class="menu-text">
+                Ekosistem Perairan
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuEkosistem"
+            href="#ekosistem">
+
+            <div class="menu-number">
+                4
+            </div>
+
+            <div class="menu-text">
+                Ekosistem Buatan
+            </div>
+
+        </a>
+
+
+        <div class="menu-title">
+            Kegiatan
+        </div>
+
+
+        <a
+            class="menu-item locked"
+            id="menuVideo"
+            href="#videoSection">
+
+            <div class="menu-number">
+                5
+            </div>
+
+            <div class="menu-text">
+                Video Pembelajaran
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuLKPD"
+            href="#lkpdSection">
+
+            <div class="menu-number">
+                6
+            </div>
+
+            <div class="menu-text">
+                LKPD
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuGame"
+            href="#gameSection">
+
+            <div class="menu-number">
+                7
+            </div>
+
+            <div class="menu-text">
+                Game Menjodohkan
+            </div>
+
+        </a>
+
+
+        <a
+            class="menu-item locked"
+            id="menuQuiz"
+            href="#quizSection">
+
+            <div class="menu-number">
+                8
+            </div>
+
+            <div class="menu-text">
+                Kuis HOTS
+            </div>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <div class="page-header">
+
+        <h1>
+            🌱 Jenis Ekosistem
+        </h1>
+
+        <p>
+            Projek IPAS – SMK Kelas X
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MATERI 1 — PENGERTIAN DAN KOMPONEN EKOSISTEM
+    ================================================== -->
+    <section class="lesson open" id="individu" data-lesson="1">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-number">1</div>
+        <div class="lesson-title"><h3>Ekosistem dan Komponennya</h3><span>Memahami hubungan makhluk hidup dan lingkungan</span></div>
+        <div class="lesson-status" id="status1">📖 Siap Dipelajari</div>
+      </div>
+      <div class="lesson-content">
+        <h4>1. Pengertian Ekosistem</h4>
+        <p>Ekosistem adalah sistem yang terbentuk dari hubungan timbal balik antara makhluk hidup (komponen biotik) dan lingkungannya (komponen abiotik) dalam suatu tempat. Dalam ekosistem, setiap komponen dapat memengaruhi komponen lainnya.</p>
+        <h4>2. Komponen Biotik</h4>
+        <p>Komponen biotik adalah seluruh makhluk hidup yang terdapat dalam ekosistem. Berdasarkan perannya, komponen biotik meliputi:</p>
+        <ul><li><strong>Produsen:</strong> organisme seperti tumbuhan yang mampu menghasilkan makanan.</li><li><strong>Konsumen:</strong> organisme seperti hewan yang memperoleh energi dengan memakan organisme lain.</li><li><strong>Dekomposer:</strong> organisme pengurai yang membantu menguraikan sisa makhluk hidup.</li></ul>
+        <h4>3. Komponen Abiotik</h4>
+        <p>Komponen abiotik adalah unsur tak hidup yang memengaruhi kehidupan organisme, misalnya iklim, tanah, air, suhu, cahaya, dan mineral.</p>
+        <div class="example-box"><strong>Contoh di kolam:</strong><p>Ikan, tumbuhan air, dan mikroorganisme merupakan komponen biotik. Air, cahaya matahari, suhu, oksigen terlarut, dan mineral merupakan komponen abiotik. Semua komponen tersebut saling berhubungan.</p></div>
+        <div class="hots-box"><div class="hots-title"><span>🧠</span><h4>HOTS – Analisis</h4></div><div class="hots-question">Sebuah kolam mengalami penurunan kadar oksigen terlarut. Analisis bagaimana perubahan komponen abiotik tersebut dapat memengaruhi ikan dan organisme lain di dalam kolam.</div><textarea class="hots-answer" data-hots="1" placeholder="Tuliskan jawabanmu berdasarkan hasil analisis..."></textarea><div class="save-info" id="saveInfo1">💾 Jawaban akan tersimpan otomatis saat kamu mengetik.</div></div>
+        <button class="complete-btn" id="complete1" onclick="completeLesson(1)">✓ Saya Sudah Selesai Mempelajari Materi</button>
+      </div>
+    </section>
+
+    <!-- =================================================
+         MATERI 2 — EKOSISTEM DARAT
+    ================================================== -->
+    <section class="lesson locked" id="populasi" data-lesson="2">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-number">🔒</div>
+        <div class="lesson-title"><h3>Ekosistem Darat (Terestrial)</h3><span>Gurun, sabana, stepa, hutan, taiga, dan tundra</span></div>
+        <div class="lesson-status" id="status2">🔒 Terkunci</div>
+      </div>
+      <div class="lesson-content">
+        <h4>1. Gurun</h4><p>Gurun memiliki curah hujan sangat rendah, kurang dari 250 mm per tahun. Suhu dapat sangat panas pada siang hari dan dingin pada malam hari. Tumbuhan xerofit seperti kaktus dan agave tahan terhadap kekeringan; fauna antara lain unta, kadal, ular, kalajengking, dan tikus gurun. Contoh: Sahara, Gobi, dan Atacama.</p>
+        <h4>2. Sabana</h4><p>Sabana merupakan padang rumput dengan sedikit pohon tersebar. Curah hujannya sekitar 500–1.500 mm per tahun dengan musim hujan dan kemarau yang jelas. Flora antara lain rumput tinggi, akasia, dan baobab. Fauna antara lain zebra, kijang, gajah, jerapah, singa, dan cheetah.</p>
+        <h4>3. Stepa</h4><p>Stepa berupa padang rumput dengan pohon sangat sedikit atau tidak ada. Curah hujan sekitar 250–750 mm per tahun, lebih rendah daripada sabana. Tumbuhan utamanya rumput pendek hingga sedang dan semak; hewannya dapat berupa bison, antelop, kuda liar, tikus tanah, dan elang.</p>
+        <h4>4. Hutan Hujan Tropis</h4><p>Hutan hujan tropis memiliki curah hujan sangat tinggi, lebih dari 2.000 mm per tahun, suhu relatif stabil sekitar 25–30°C, dan kelembapan tinggi. Vegetasinya berlapis, dengan pohon tinggi, epifit, dan liana. Keanekaragaman spesiesnya sangat tinggi. Contoh: Amazon, Kalimantan, Papua, dan Afrika Tengah.</p>
+        <h4>5. Hutan Gugur</h4><p>Hutan gugur mengalami empat musim; pohon menggugurkan daun pada musim gugur atau dingin. Curah hujannya sekitar 750–1.500 mm per tahun. Flora contohnya oak, maple, beech, dan birch; fauna antara lain rusa, beruang, rubah, tupai, dan burung migran.</p>
+        <h4>6. Taiga</h4><p>Taiga adalah hutan konifer di wilayah dingin dengan musim dingin panjang dan bersalju serta musim panas singkat. Tumbuhan dominannya pinus, spruce, dan fir yang berdaun jarum. Hewannya antara lain rusa kutub, moose, beruang, serigala, lynx, dan burung hantu.</p>
+        <h4>7. Tundra</h4><p>Tundra merupakan wilayah daratan yang sangat dingin, memiliki musim dingin panjang, tanah beku permanen (permafrost), dan vegetasi terbatas. Flora berupa lumut, lichen, semak kerdil, dan rumput pendek; fauna antara lain rusa kutub, rubah kutub, lemming, serta burung migran pada musim panas.</p>
+        <div class="example-box"><strong>Membandingkan ekosistem:</strong><p>Gurun dibatasi oleh kekurangan air, sedangkan tundra oleh suhu sangat rendah dan tanah beku. Sabana memiliki rumput dengan pohon tersebar, sementara stepa didominasi padang rumput dengan pohon sangat sedikit.</p></div>
+        <div class="hots-box"><div class="hots-title"><span>🧠</span><h4>HOTS – Analisis</h4></div><div class="hots-question">Dua wilayah sama-sama didominasi rumput. Wilayah A memiliki pohon akasia tersebar dan musim hujan-kemarau yang jelas, sedangkan wilayah B hampir tidak memiliki pohon dan curah hujannya lebih rendah. Tentukan jenis ekosistem masing-masing dan jelaskan alasanmu.</div><textarea class="hots-answer" data-hots="2" placeholder="Tuliskan jawabanmu berdasarkan hasil analisis..."></textarea><div class="save-info" id="saveInfo2">💾 Jawaban akan tersimpan otomatis saat kamu mengetik.</div></div>
+        <button class="complete-btn" id="complete2" onclick="completeLesson(2)">✓ Saya Sudah Selesai Mempelajari Materi</button>
+      </div>
+    </section>
+
+    <!-- =================================================
+         MATERI 3 — EKOSISTEM PERAIRAN
+    ================================================== -->
+    <section class="lesson locked" id="komunitas" data-lesson="3">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-number">🔒</div>
+        <div class="lesson-title"><h3>Ekosistem Perairan</h3><span>Ekosistem air laut dan air tawar</span></div>
+        <div class="lesson-status" id="status3">🔒 Terkunci</div>
+      </div>
+      <div class="lesson-content">
+        <h4>1. Ekosistem Air Laut</h4><p>Air laut memiliki kadar garam rata-rata sekitar 35 ppt dan mencakup sekitar 71% permukaan bumi. Berdasarkan kedalaman dan cahaya, wilayahnya dibagi menjadi zona litoral, neritik, oseanik, dan abisal. Produsennya antara lain fitoplankton, alga, dan rumput laut; mangrove tumbuh di wilayah pesisir. Faunanya meliputi zooplankton, ikan, paus, lumba-lumba, hiu, terumbu karang, moluska, dan krustasea.</p>
+        <h4>2. Ekosistem Air Tawar</h4><p>Air tawar memiliki kadar garam sangat rendah, kurang dari 0,5 ppt. Contohnya sungai, danau, rawa, dan kolam. Ekosistem air tawar dibedakan menjadi:</p>
+        <ul><li><strong>Lentik (air tenang):</strong> danau, rawa, dan kolam; dapat memiliki zona litoral, limnetik, dan profundal.</li><li><strong>Lotik (air mengalir):</strong> sungai dan sungai kecil; arus memengaruhi organisme yang hidup di dalamnya.</li></ul>
+        <p>Flora air tawar meliputi fitoplankton, hydrilla, eceng gondok, teratai, dan lumut air. Faunanya antara lain ikan nila, ikan mas, lele, katak, udang, serangga air, dan burung air. Contoh di Indonesia: Danau Toba, Sungai Mahakam, dan rawa di Kalimantan.</p>
+        <div class="example-box"><strong>Perbedaan penting:</strong><p>Kadar garam menjadi pembeda utama air laut dan air tawar. Pada air tawar, keberadaan arus juga membedakan ekosistem lotik dari ekosistem lentik.</p></div>
+        <div class="hots-box"><div class="hots-title"><span>🧠</span><h4>HOTS – Analisis</h4></div><div class="hots-question">Sebuah sungai berubah menjadi lebih tenang karena alirannya dibendung, dan sebagian wilayahnya menjadi seperti kolam. Jelaskan perubahan kondisi habitat yang mungkin terjadi dan perbedaan organisme yang dapat diuntungkan dibandingkan kondisi sungai berarus.</div><textarea class="hots-answer" data-hots="3" placeholder="Tuliskan jawabanmu berdasarkan hasil analisis..."></textarea><div class="save-info" id="saveInfo3">💾 Jawaban akan tersimpan otomatis saat kamu mengetik.</div></div>
+        <button class="complete-btn" id="complete3" onclick="completeLesson(3)">✓ Saya Sudah Selesai Mempelajari Materi</button>
+      </div>
+    </section>
+
+    <!-- =================================================
+         MATERI 4 — EKOSISTEM BUATAN
+    ================================================== -->
+    <section class="lesson locked" id="ekosistem" data-lesson="4">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-number">🔒</div>
+        <div class="lesson-title"><h3>Ekosistem Buatan dan Pengelolaannya</h3><span>Manfaat, ciri-ciri, dan dampak pengelolaan</span></div>
+        <div class="lesson-status" id="status4">🔒 Terkunci</div>
+      </div>
+      <div class="lesson-content">
+        <h4>1. Pengertian Ekosistem Buatan</h4><p>Ekosistem buatan adalah ekosistem yang sengaja dibuat atau dimodifikasi manusia untuk memenuhi kebutuhan tertentu.</p>
+        <h4>2. Ciri-ciri Ekosistem Buatan</h4><ul><li>Keanekaragaman hayati biasanya lebih rendah dibandingkan banyak ekosistem alami.</li><li>Sangat dipengaruhi campur tangan manusia, seperti pemberian pupuk dan pestisida serta pengaturan air.</li><li>Sering memerlukan pemeliharaan secara terus-menerus.</li></ul>
+        <h4>3. Contoh dan Manfaat</h4><p>Contoh ekosistem buatan antara lain sawah, kolam ikan, tambak, kebun, perkebunan, hutan tanaman industri, taman kota, akuarium, waduk, dan area reklamasi. Manfaatnya meliputi produksi pangan dan kayu, rekreasi, serta pengendalian banjir.</p>
+        <h4>4. Dampak jika Tidak Dikelola dengan Baik</h4><p>Pengelolaan yang buruk dapat menyebabkan penurunan keanekaragaman hayati, pencemaran, erosi, dan kerusakan habitat alami. Karena itu, pengelolaan perlu mempertimbangkan kebutuhan manusia dan keberlanjutan lingkungan.</p>
+        <div class="example-box"><strong>Contoh kasus:</strong><p>Sawah menghasilkan pangan, tetapi penggunaan pestisida berlebihan dapat membunuh organisme bukan sasaran dan mengganggu hubungan antarorganisme di ekosistem tersebut.</p></div>
+        <div class="hots-box"><div class="hots-title"><span>🧠</span><h4>HOTS – Analisis</h4></div><div class="hots-question">Sebuah kolam ikan buatan menghasilkan banyak ikan, tetapi pengelolanya menggunakan pakan berlebihan dan membuang limbah ke saluran air. Analisis dua dampak lingkungan yang mungkin muncul dan usulkan cara pengelolaan yang lebih baik.</div><textarea class="hots-answer" data-hots="4" placeholder="Tuliskan jawabanmu berdasarkan hasil analisis..."></textarea><div class="save-info" id="saveInfo4">💾 Jawaban akan tersimpan otomatis saat kamu mengetik.</div></div>
+        <button class="complete-btn" id="complete4" onclick="completeLesson(4)">✓ Saya Sudah Selesai Mempelajari Materi</button>
+      </div>
+    </section>
+
+    <!-- =================================================
+         VIDEO
+    ================================================== -->
+
+    <section
+        class="special-section"
+        id="videoSection">
+
+
+        <div class="special-title">
+
+            <div class="lesson-number">
+                5
+            </div>
+
+            <h2>
+                🎬 Video Pembelajaran
+            </h2>
+
+        </div>
+
+
+        <div id="videoContent">
+
+            <div
+                class="lock-message"
+                id="videoLockStatus">
+
+                🔒 Video akan terbuka setelah keempat materi selesai dipelajari.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LKPD
+    ================================================== -->
+
+    <section
+        class="special-section"
+        id="lkpdSection">
+
+
+        <div class="special-title">
+
+            <div class="lesson-number">
+                6
+            </div>
+
+            <h2>
+                📝 LKPD
+            </h2>
+
+        </div>
+
+
+        <div id="lkpdContent">
+
+            <div
+                class="lock-message"
+                id="lkpdLockStatus">
+
+                🔒 LKPD akan terbuka setelah kegiatan
+                video selesai.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         GAME MENJODOHKAN
+    ================================================== -->
+
+    <section class="special-section" id="gameSection">
+        <div class="special-title">
+            <div class="lesson-number">7</div>
+            <h2>🧩 Game Tantangan Ekosistem</h2>
+        </div>
+        <div id="gameContent">
+            <div class="lock-message">🔒 Game akan terbuka setelah LKPD selesai dikerjakan.</div>
+        </div>
+    </section>
+
+
+    <!-- =================================================
+         KUIS
+    ================================================== -->
+
+    <section
+        class="special-section"
+        id="quizSection">
+
+
+        <div class="special-title">
+
+            <div class="lesson-number">
+                8
+            </div>
+
+            <h2>
+                🧠 Kuis HOTS
+            </h2>
+
+        </div>
+
+
+        <div id="quizContent">
+
+            <div
+                class="lock-message"
+                id="quizLockStatus">
+
+                🔒 Kuis akan terbuka setelah game menjodohkan dijawab benar semua.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="quiz-result"
+            id="quizScore"
+            style="display:none;">
+
+            Nilai: -
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         AKTIVITAS
+    ================================================== -->
+
+    <div class="activity-box">
+
+        <h3>
+            📊 Status Aktivitas
+        </h3>
+
+
+        <div
+            class="activity-item"
+            id="activity1">
+
+            <div class="activity-icon">
+                1
+            </div>
+
+            <div>
+                Materi Ekosistem dan Komponen
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activity2">
+
+            <div class="activity-icon">
+                2
+            </div>
+
+            <div>
+                Materi Ekosistem Darat
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activity3">
+
+            <div class="activity-icon">
+                3
+            </div>
+
+            <div>
+                Materi Ekosistem Perairan
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activity4">
+
+            <div class="activity-icon">
+                4
+            </div>
+
+            <div>
+                Materi Ekosistem
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activityVideo">
+
+            <div class="activity-icon">
+                5
+            </div>
+
+            <div>
+                Video Pembelajaran
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activityLKPD">
+
+            <div class="activity-icon">
+                6
+            </div>
+
+            <div>
+                LKPD
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activityGame">
+
+            <div class="activity-icon">
+                7
+            </div>
+
+            <div>
+                Game Menjodohkan
+            </div>
+
+        </div>
+
+
+        <div
+            class="activity-item"
+            id="activityQuiz">
+
+            <div class="activity-icon">
+                8
+            </div>
+
+            <div>
+                Kuis HOTS
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+/* =====================================================
+   KONFIGURASI STORAGE
+===================================================== */
+
+const BASE_STORAGE_KEY = "edusmk_ipas_jenis_ekosistem_v1";
+let STORAGE_KEY = BASE_STORAGE_KEY;
+const STUDENTS_KEY = "edusmk_ipas_ekosistem_students_v1";
+// Setelah menerbitkan Google Apps Script, tempel URL Web App di bawah ini.
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxB0TNIW-Tcpc8rVxPNck3fjNaWwVF_WrvHaFO4TNAdiL4SMzGvNXy3uqyfy60ez5_EYw/exec";
+let activeStudent = null;
+let sheetsSyncTimer = null;
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let state = {
+
+    lessons:{
+        1:false,
+        2:false,
+        3:false,
+        4:false
+    },
+
+    hotsAnswers:{
+        1:"",
+        2:"",
+        3:"",
+        4:""
+    },
+
+    videoAnswers:[],
+    videoCompleted:false,
+
+    lkpdAnswers:[],
+    lkpdCompleted:false,
+    gameMatches:{},
+    gameCompleted:false,
+
+    quizScore:null,
+    quizAnswers:[]
+
+};
+
+
+/* =====================================================
+   LOAD STATE
+===================================================== */
+
+function loadState(){
+
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+    if(!saved){
+        return;
+    }
+
+
+    try{
+
+        const parsed =
+            JSON.parse(saved);
+
+
+        state = {
+
+            ...state,
+
+            ...parsed,
+
+            lessons:{
+                ...state.lessons,
+                ...(parsed.lessons || {})
+            },
+
+            hotsAnswers:{
+                ...state.hotsAnswers,
+                ...(parsed.hotsAnswers || {})
+            }
+
+        };
+
+
+    }catch(error){
+
+        console.log(
+            "Progress sebelumnya tidak dapat dibaca."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE STATE
+===================================================== */
+
+function saveState(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+    );
+
+    // Catat ringkasan progres per siswa ke Google Sheets.
+    if(activeStudent){
+        const registry = readStudentRegistry();
+        const done = [
+            !!state.lessons[1], !!state.lessons[2],
+            !!state.lessons[3], !!state.lessons[4],
+            !!state.videoCompleted, !!state.lkpdCompleted, !!state.gameCompleted,
+            typeof state.quizScore === "number"
+        ].filter(Boolean).length;
+        registry[activeStudent.id] = {
+            id: activeStudent.id,
+            name: activeStudent.name,
+            className: activeStudent.className,
+            absen: activeStudent.absen,
+            progress: Math.round(done / 8 * 100),
+            completedActivities: done,
+            totalActivities: 8,
+            lessons: state.lessons,
+            videoCompleted: !!state.videoCompleted,
+            lkpdCompleted: !!state.lkpdCompleted,
+            gameCompleted: !!state.gameCompleted,
+            quizScore: state.quizScore,
+            startedAt: registry[activeStudent.id]?.startedAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            completed: done === 8
+        };
+        localStorage.setItem(STUDENTS_KEY, JSON.stringify(registry));
+        scheduleSheetsSync(registry[activeStudent.id]);
+    }
+
+}
+
+// Kirim ringkasan progres dan jawaban siswa per kolom ke Google Sheets.
+// Pengiriman ditunda agar setiap ketikan tidak membuat permintaan baru.
+function scheduleSheetsSync(record){
+    if(!GOOGLE_SHEETS_WEB_APP_URL || GOOGLE_SHEETS_WEB_APP_URL.includes("TEMPELKAN_URL")) return;
+    clearTimeout(sheetsSyncTimer);
+    const snapshot = JSON.parse(JSON.stringify(record));
+    // Kirim isi jawaban per kolom agar guru dapat meninjau jawaban tiap siswa.
+    snapshot.hotsAnswers = JSON.parse(JSON.stringify(state.hotsAnswers || {}));
+    snapshot.videoAnswers = JSON.parse(JSON.stringify(state.videoAnswers || []));
+    snapshot.lkpdAnswers = JSON.parse(JSON.stringify(state.lkpdAnswers || []));
+    snapshot.quizAnswers = (state.quizAnswers || []).map((selected, index) => {
+        if (selected === null || selected === undefined || selected === "") return "";
+        const q = (typeof quizQuestions !== "undefined") ? quizQuestions[index] : null;
+        const option = q && q.options ? q.options[Number(selected)] : "";
+        return option ? String.fromCharCode(65 + Number(selected)) + ". " + option : String(selected);
+    });
+    sheetsSyncTimer = setTimeout(() => {
+        fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "saveProgress", student: snapshot })
+        }).then(() => {
+            const label = document.getElementById("activeStudentLabel");
+            if(label) label.title = "Progres dikirim ke Google Sheets. Karena mode koneksi lintas situs, status server tidak dapat dikonfirmasi dari browser.";
+        }).catch(err => console.warn("Sinkronisasi Google Sheets gagal:", err));
+    }, 1800);
+}
+
+function readStudentRegistry(){
+    try { return JSON.parse(localStorage.getItem(STUDENTS_KEY) || "{}"); }
+    catch(e) { return {}; }
+}
+
+function startStudent(event){
+    event.preventDefault();
+    const name = document.getElementById("studentName").value.trim();
+    const className = document.getElementById("studentClass").value.trim();
+    const absen = document.getElementById("studentAbsen").value.trim();
+    if(!name || !className || !absen) return;
+
+    // Kunci siswa dibuat dari kelas + nomor absen agar progres tidak tercampur.
+    const id = (className + "_" + absen).toLowerCase().replace(/[^a-z0-9_-]+/g, "_");
+    activeStudent = {id, name, className, absen};
+    STORAGE_KEY = BASE_STORAGE_KEY + "__" + id;
+
+    // Mulai dengan state bersih, lalu muat progres milik siswa ini saja.
+    state = {
+        lessons:{1:false,2:false,3:false,4:false},
+        hotsAnswers:{1:"",2:"",3:"",4:""},
+        videoAnswers:[], videoCompleted:false,
+        lkpdAnswers:[], lkpdCompleted:false,
+        gameMatches:{}, gameCompleted:false,
+        quizScore:null, quizAnswers:[]
+    };
+    loadState();
+    document.getElementById("studentGate").style.display = "none";
+    const header = document.querySelector(".page-header");
+    if(header){
+        let identity = document.getElementById("activeStudentLabel");
+        if(!identity){
+            identity = document.createElement("p");
+            identity.id = "activeStudentLabel";
+            identity.style.cssText = "margin-top:10px;font-weight:700;color:#047857;";
+            header.appendChild(identity);
+        }
+        identity.textContent = "Peserta: " + name + " • " + className + " • Absen " + absen;
+    }
+    updateInterface();
+    document.querySelectorAll("[data-hots]").forEach(input => {
+        const idNum = Number(input.dataset.hots);
+        input.value = state.hotsAnswers[idNum] || "";
+    });
+    saveState();
+}
+
+document.getElementById("studentForm").addEventListener("submit", startStudent);
+
+
+/* =====================================================
+   AUTO SAVE HOTS
+===================================================== */
+
+function saveHOTSAnswer(
+    input
+){
+
+    const id =
+        Number(
+            input.dataset.hots
+        );
+
+
+    state.hotsAnswers[id] =
+        input.value;
+
+
+    saveState();
+
+
+    const info =
+        document.getElementById(
+            "saveInfo" + id
+        );
+
+
+    if(info){
+
+        info.textContent =
+            "✓ Jawaban tersimpan otomatis.";
+
+        info.classList.add(
+            "saved"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CEK BOLEH BUKA MATERI
+===================================================== */
+
+function canOpenLesson(id){
+
+    /*
+     * Materi pertama selalu terbuka.
+     */
+
+    if(id === 1){
+
+        return true;
+
+    }
+
+
+    /*
+     * Materi berikutnya hanya terbuka
+     * jika materi sebelumnya selesai.
+     */
+
+    return (
+        state.lessons[id - 1] === true
+    );
+
+}
+
+
+/* =====================================================
+   TOGGLE MATERI
+===================================================== */
+
+function toggleLesson(header){
+
+    const lesson =
+        header.closest(".lesson");
+
+
+    if(!lesson){
+        return;
+    }
+
+
+    const id =
+        Number(
+            lesson.dataset.lesson
+        );
+
+
+    /*
+     * CEK KUNCI
+     */
+
+    if(!canOpenLesson(id)){
+
+        lockedMessage(id);
+
+        return;
+
+    }
+
+
+    lesson.classList.remove(
+        "locked"
+    );
+
+
+    /*
+     * Tutup materi lain.
+     */
+
+    document.querySelectorAll(
+        ".lesson"
+    ).forEach(
+        item => {
+
+            if(item !== lesson){
+
+                item.classList.remove(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Buka materi yang dipilih.
+     */
+
+    lesson.classList.toggle(
+        "open"
+    );
+
+}
+
+
+/* =====================================================
+   PESAN TERKUNCI
+===================================================== */
+
+function lockedMessage(id){
+
+    const names = {
+
+        1:"Ekosistem dan Komponen",
+
+        2:"Ekosistem Darat",
+
+        3:"Ekosistem Perairan",
+
+        4:"Ekosistem Buatan"
+
+    };
+
+
+    if(id <= 1){
+        return;
+    }
+
+
+    const previous =
+        id - 1;
+
+
+    alert(
+
+        "🔒 Materi masih terkunci.\n\n" +
+
+        "Silakan selesaikan terlebih dahulu:\n" +
+
+        "Materi " +
+        previous +
+        " - " +
+        names[previous]
+
+    );
+
+}
+
+
+/* =====================================================
+   CEK HOTS
+===================================================== */
+
+function hasHOTSAnswer(id){
+
+    const answer =
+        state.hotsAnswers[id];
+
+
+    return (
+        typeof answer === "string" &&
+        answer.trim().length > 0
+    );
+
+}
+
+
+/* =====================================================
+   COMPLETE LESSON
+===================================================== */
+
+function completeLesson(id){
+
+    /*
+     * Pastikan materi boleh dibuka.
+     */
+
+    if(!canOpenLesson(id)){
+
+        lockedMessage(id);
+
+        return;
+
+    }
+
+
+    /*
+     * Cek jawaban HOTS.
+     */
+
+    if(!hasHOTSAnswer(id)){
+
+        alert(
+
+            "⚠️ Jawaban HOTS belum diisi.\n\n" +
+
+            "Silakan jawab soal HOTS terlebih dahulu " +
+
+            "sebelum menandai materi sebagai selesai."
+
+        );
+
+
+        const input =
+            document.querySelector(
+                `[data-hots="${id}"]`
+            );
+
+
+        if(input){
+
+            input.focus();
+
+            input.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"center"
+
+            });
+
+        }
+
+
+        return;
+
+    }
+
+
+    /*
+     * Jika sudah selesai.
+     */
+
+    if(state.lessons[id]){
+
+        return;
+
+    }
+
+
+    /*
+     * Tandai selesai.
+     */
+
+    state.lessons[id] =
+        true;
+
+
+    saveState();
+
+    updateInterface();
+
+
+    /*
+     * Jika masih ada materi berikutnya.
+     */
+
+    if(id < 4){
+
+        setTimeout(
+
+            function(){
+
+                const next =
+                    document.querySelector(
+                        `.lesson[data-lesson="${id + 1}"]`
+                    );
+
+
+                if(next){
+
+                    next.classList.remove(
+                        "locked"
+                    );
+
+                    next.classList.add(
+                        "open"
+                    );
+
+
+                    next.scrollIntoView({
+
+                        behavior:"smooth",
+
+                        block:"start"
+
+                    });
+
+                }
+
+            },
+
+            300
+
+        );
+
+
+        alert(
+
+            "✅ Materi selesai dipelajari!\n\n" +
+
+            "Materi berikutnya sekarang telah terbuka."
+
+        );
+
+    }
+
+    else{
+
+        alert(
+
+            "🎉 Selamat!\n\n" +
+
+            "Semua materi utama telah selesai.\n\n" +
+
+            "Video pembelajaran sekarang telah terbuka."
+
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SEMUA MATERI SELESAI
+===================================================== */
+
+function allLessonsCompleted(){
+
+    return (
+
+        state.lessons[1] === true &&
+
+        state.lessons[2] === true &&
+
+        state.lessons[3] === true &&
+
+        state.lessons[4] === true
+
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE LESSON
+===================================================== */
+
+function updateLessons(){
+
+    for(
+        let i = 1;
+        i <= 4;
+        i++
+    ){
+
+        const lesson =
+            document.querySelector(
+                `.lesson[data-lesson="${i}"]`
+            );
+
+
+        const status =
+            document.getElementById(
+                "status" + i
+            );
+
+
+        const button =
+            document.getElementById(
+                "complete" + i
+            );
+
+
+        if(!lesson){
+            continue;
+        }
+
+
+        const number =
+            lesson.querySelector(
+                ".lesson-number"
+            );
+
+
+        /*
+         * SELESAI
+         */
+
+        if(
+            state.lessons[i] === true
+        ){
+
+            lesson.classList.remove(
+                "locked"
+            );
+
+            lesson.classList.add(
+                "completed"
+            );
+
+
+            if(status){
+
+                status.textContent =
+                    "✓ Sudah Dipelajari";
+
+            }
+
+
+            if(number){
+
+                number.textContent =
+                    "✓";
+
+            }
+
+
+            if(button){
+
+                button.textContent =
+                    "✓ Materi Sudah Dipelajari";
+
+                button.classList.add(
+                    "completed"
+                );
+
+                button.disabled =
+                    true;
+
+            }
+
+        }
+
+
+        /*
+         * BOLEH DIBUKA
+         */
+
+        else if(
+            canOpenLesson(i)
+        ){
+
+            lesson.classList.remove(
+                "locked"
+            );
+
+
+            lesson.classList.remove(
+                "completed"
+            );
+
+
+            if(status){
+
+                status.textContent =
+                    "📖 Siap Dipelajari";
+
+            }
+
+
+            if(number){
+
+                number.textContent =
+                    i;
+
+            }
+
+
+            if(button){
+
+                button.disabled =
+                    false;
+
+                button.classList.remove(
+                    "completed"
+                );
+
+                button.textContent =
+                    "✓ Saya Sudah Selesai Mempelajari Materi";
+
+            }
+
+        }
+
+
+        /*
+         * TERKUNCI
+         */
+
+        else{
+
+            lesson.classList.add(
+                "locked"
+            );
+
+
+            if(status){
+
+                status.textContent =
+                    "🔒 Terkunci";
+
+            }
+
+
+            if(number){
+
+                number.textContent =
+                    "🔒";
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE MENU
+===================================================== */
+
+function updateMenu(){
+
+    const menuNames = [
+
+        null,
+
+        "menuIndividu",
+
+        "menuPopulasi",
+
+        "menuKomunitas",
+
+        "menuEkosistem"
+
+    ];
+
+
+    for(
+        let i = 1;
+        i <= 4;
+        i++
+    ){
+
+        const menu =
+            document.getElementById(
+                menuNames[i]
+            );
+
+
+        if(!menu){
+            continue;
+        }
+
+
+        if(
+            canOpenLesson(i)
+        ){
+
+            menu.classList.remove(
+                "locked"
+            );
+
+        }
+        else{
+
+            menu.classList.add(
+                "locked"
+            );
+
+        }
+
+    }
+
+
+    /*
+     * VIDEO
+     */
+
+    const videoMenu =
+        document.getElementById(
+            "menuVideo"
+        );
+
+
+    if(
+        allLessonsCompleted()
+    ){
+
+        videoMenu.classList.remove(
+            "locked"
+        );
+
+    }
+    else{
+
+        videoMenu.classList.add(
+            "locked"
+        );
+
+    }
+
+
+    /*
+     * LKPD
+     */
+
+    const lkpdMenu =
+        document.getElementById(
+            "menuLKPD"
+        );
+
+
+    if(
+        state.videoCompleted
+    ){
+
+        lkpdMenu.classList.remove(
+            "locked"
+        );
+
+    }
+    else{
+
+        lkpdMenu.classList.add(
+            "locked"
+        );
+
+    }
+
+
+    /*
+     * GAME MENJODOHKAN
+     */
+    const gameMenu = document.getElementById("menuGame");
+    if(gameMenu){
+        gameMenu.classList.toggle("locked", !state.lkpdCompleted);
+    }
+
+    /*
+     * QUIZ
+     */
+    const quizMenu = document.getElementById("menuQuiz");
+    if(quizMenu){
+        quizMenu.classList.toggle("locked", !state.gameCompleted);
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE PROGRESS
+===================================================== */
+
+function updateProgress(){
+
+    let completed =
+        0;
+
+
+    for(
+        let i = 1;
+        i <= 4;
+        i++
+    ){
+
+        if(
+            state.lessons[i]
+        ){
+
+            completed++;
+
+        }
+
+    }
+
+
+    if(
+        state.videoCompleted
+    ){
+
+        completed++;
+
+    }
+
+
+    if(
+        state.lkpdCompleted
+    ){
+
+        completed++;
+
+    }
+
+
+    if(state.gameCompleted){
+        completed++;
+    }
+
+
+    if(
+        state.quizScore !== null
+    ){
+
+        completed++;
+
+    }
+
+
+    const percent =
+        Math.round(
+            completed / 8 * 100
+        );
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        percent + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        percent + "%";
+
+}
+
+
+/* =====================================================
+   UPDATE AKTIVITAS
+===================================================== */
+
+function updateActivities(){
+
+    for(
+        let i = 1;
+        i <= 4;
+        i++
+    ){
+
+        const item =
+            document.getElementById(
+                "activity" + i
+            );
+
+
+        if(
+            state.lessons[i]
+        ){
+
+            item.classList.add(
+                "done"
+            );
+
+
+            item.querySelector(
+                ".activity-icon"
+            ).textContent =
+                "✓";
+
+        }
+
+    }
+
+
+    if(
+        state.videoCompleted
+    ){
+
+        const item =
+            document.getElementById(
+                "activityVideo"
+            );
+
+
+        item.classList.add(
+            "done"
+        );
+
+
+        item.querySelector(
+            ".activity-icon"
+        ).textContent =
+            "✓";
+
+    }
+
+
+    if(
+        state.lkpdCompleted
+    ){
+
+        const item =
+            document.getElementById(
+                "activityLKPD"
+            );
+
+
+        item.classList.add(
+            "done"
+        );
+
+
+        item.querySelector(
+            ".activity-icon"
+        ).textContent =
+            "✓";
+
+    }
+
+
+    const gameItem = document.getElementById("activityGame");
+    if(gameItem){
+        gameItem.classList.toggle("done", !!state.gameCompleted);
+        gameItem.querySelector(".activity-icon").textContent = state.gameCompleted ? "✓" : "7";
+    }
+
+
+    if(
+        state.quizScore !== null
+    ){
+
+        const item =
+            document.getElementById(
+                "activityQuiz"
+            );
+
+
+        item.classList.add(
+            "done"
+        );
+
+
+        item.querySelector(
+            ".activity-icon"
+        ).textContent =
+            "✓";
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER VIDEO
+===================================================== */
+
+function renderVideo(){
+
+    const container =
+        document.getElementById(
+            "videoContent"
+        );
+
+
+    if(
+        !allLessonsCompleted()
+    ){
+
+        container.innerHTML = `
+
+            <div class="lock-message">
+
+                🔒 <strong>
+                    Video masih terkunci.
+                </strong>
+
+                <p>
+                    Selesaikan keempat materi
+                    beserta soal HOTS masing-masing
+                    terlebih dahulu.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <div class="video-container">
+
+            <iframe
+                src="https://www.youtube.com/embed/mLWk3zvDE-M?si=GTPxEJbos77E4r3D"
+                title="Video Pembelajaran Jenis Ekosistem"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+
+        <h3>
+            Pertanyaan Pengamatan Video: Ekosistem Lahan Gambut
+        </h3>
+
+
+        <p>
+            Tonton video dengan saksama dari awal hingga akhir. Catat informasi penting dan jawablah pertanyaan berdasarkan hasil pengamatanmu. Pertanyaan tidak menunjukkan bagian tertentu, jadi pastikan kamu menyimak keseluruhan video.
+        </p>
+
+
+        ${videoQuestion(
+
+            0,
+
+            "Apa yang dimaksud dengan lahan gambut, bagaimana lahan ini terbentuk secara umum, dan di tiga pulau Indonesia mana lahan gambut terluas berada?"
+
+        )}
+
+
+        ${videoQuestion(
+
+            1,
+
+            "Jelaskan proses terbentuknya lahan gambut. Mengapa sisa-sisa tumbuhan tidak cepat terurai di lingkungan gambut, dan berapa lama proses pembentukannya?"
+
+        )}
+
+
+        ${videoQuestion(
+
+            2,
+
+            "Sebutkan sedikitnya tiga contoh flora atau fauna yang hidup di ekosistem gambut Kalimantan. Jelaskan bagaimana makhluk hidup tersebut menjadi bagian dari ekosistem ini."
+
+        )}
+
+
+        ${videoQuestion(
+
+            3,
+
+            "Jelaskan dua fungsi ekologis lahan gambut yang disebutkan dalam video. Apa arti istilah carbon sink, dan bagaimana gambut membantu menyimpan karbon?"
+
+        )}
+
+
+        ${videoQuestion(
+
+            4,
+
+            "Apa akibat pengeringan lahan gambut untuk alih fungsi lahan? Jelaskan bagaimana kebakaran bawah tanah (ground fire) dapat terjadi dan sebutkan dampak kerusakan gambut terhadap lingkungan."
+
+        )}
+
+
+        <button
+            class="complete-btn"
+            onclick="completeVideo()">
+
+            ✓ Selesai Menonton dan Menjawab
+
+        </button>
+
+    `;
+
+}
+
+
+/* =====================================================
+   VIDEO QUESTION
+===================================================== */
+
+function videoQuestion(
+    index,
+    question
+){
+
+    const answer =
+        state.videoAnswers[index] ||
+        "";
+
+
+    return `
+
+        <div class="question-box">
+
+            <strong>
+                ${index + 1}. ${question}
+            </strong>
+
+            <br><br>
+
+            <textarea
+                data-video="${index}"
+                placeholder="Tuliskan jawabanmu..."
+            >${answer}</textarea>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   COMPLETE VIDEO
+===================================================== */
+
+function completeVideo(){
+
+    const fields =
+        document.querySelectorAll(
+            "[data-video]"
+        );
+
+
+    const answers =
+        [];
+
+
+    for(
+        const field of fields
+    ){
+
+        const value =
+            field.value.trim();
+
+
+        if(!value){
+
+            alert(
+                "⚠️ Silakan jawab semua pertanyaan video terlebih dahulu."
+            );
+
+
+            field.focus();
+
+            return;
+
+        }
+
+
+        answers.push(
+            value
+        );
+
+    }
+
+
+    state.videoAnswers =
+        answers;
+
+
+    state.videoCompleted =
+        true;
+
+
+    saveState();
+
+    updateInterface();
+
+
+    alert(
+
+        "🎉 Kegiatan video selesai!\n\n" +
+
+        "LKPD sekarang telah dibuka."
+
+    );
+
+}
+
+
+/* =====================================================
+   RENDER LKPD
+===================================================== */
+
+function renderLKPD(){
+
+    const container =
+        document.getElementById(
+            "lkpdContent"
+        );
+
+
+    if(
+        !state.videoCompleted
+    ){
+
+        container.innerHTML = `
+
+            <div class="lock-message">
+
+                🔒 <strong>
+                    LKPD masih terkunci.
+                </strong>
+
+                <p>
+                    Selesaikan kegiatan video
+                    terlebih dahulu.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <p>
+
+            Amatilah satu ekosistem di sekitar rumah atau sekolah. Isilah tabel berikut berdasarkan pengamatan dan materi tentang jenis ekosistem. Jika jenis ekosistem tidak dapat diamati langsung, gunakan contoh yang kamu kenal dan jelaskan alasannya.
+
+        </p>
+
+
+        <table class="lkpd-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        No
+                    </th>
+
+                    <th>
+                        Aspek
+                    </th>
+
+                    <th>
+                        Hasil Pengamatan
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${lkpdRow(
+
+                    1,
+
+                    "Nama/Lokasi Ekosistem",
+
+                    "Tuliskan nama atau lokasi ekosistem yang diamati."
+
+                )}
+
+
+                ${lkpdRow(
+
+                    2,
+
+                    "Jenis Ekosistem",
+
+                    "Tentukan apakah termasuk ekosistem darat, perairan, atau buatan."
+
+                )}
+
+
+                ${lkpdRow(
+
+                    3,
+
+                    "Flora dan Fauna",
+
+                    "Tuliskan contoh tumbuhan dan hewan yang hidup di sana."
+
+                )}
+
+
+                ${lkpdRow(
+
+                    4,
+
+                    "Komponen Biotik",
+
+                    "Identifikasi produsen, konsumen, atau dekomposer yang ada."
+
+                )}
+
+
+                ${lkpdRow(
+
+                    5,
+
+                    "Komponen Abiotik",
+
+                    "Tuliskan faktor tak hidup seperti air, tanah, suhu, cahaya, atau mineral."
+
+                )}
+
+            </tbody>
+
+        </table>
+
+
+        <div class="question-box">
+
+            <strong>
+                Kesimpulan
+            </strong>
+
+            <p>
+
+                Jelaskan bagaimana komponen biotik dan abiotik saling berhubungan pada ekosistem yang kamu pilih. Sebutkan pula satu cara agar ekosistem tersebut tetap terjaga.
+
+            </p>
+
+
+            <textarea
+                data-lkpd="6"
+                placeholder="Tuliskan kesimpulan..."
+            >${state.lkpdAnswers[6] || ""}</textarea>
+
+        </div>
+
+
+        <button
+            class="complete-btn"
+            onclick="completeLKPD()">
+
+            ✓ Selesai Mengerjakan LKPD
+
+        </button>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LKPD ROW
+===================================================== */
+
+function lkpdRow(
+    index,
+    title,
+    description
+){
+
+    return `
+
+        <tr>
+
+            <td>
+                ${index}
+            </td>
+
+            <td>
+
+                <strong>
+                    ${title}
+                </strong>
+
+                <br>
+
+                <small>
+                    ${description}
+                </small>
+
+            </td>
+
+            <td>
+
+                <textarea
+                    data-lkpd="${index}"
+                    placeholder="Tuliskan hasil pengamatan..."
+                >${state.lkpdAnswers[index] || ""}</textarea>
+
+            </td>
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =====================================================
+   COMPLETE LKPD
+===================================================== */
+
+function completeLKPD(){
+
+    const fields =
+        document.querySelectorAll(
+            "[data-lkpd]"
+        );
+
+
+    const answers =
+        [];
+
+
+    for(
+        const field of fields
+    ){
+
+        const value =
+            field.value.trim();
+
+
+        if(!value){
+
+            alert(
+                "⚠️ Silakan lengkapi seluruh LKPD terlebih dahulu."
+            );
+
+
+            field.focus();
+
+            return;
+
+        }
+
+
+        answers[field.dataset.lkpd] =
+            value;
+
+    }
+
+
+    state.lkpdAnswers =
+        answers;
+
+
+    state.lkpdCompleted =
+        true;
+
+
+    saveState();
+
+    updateInterface();
+
+
+    alert(
+
+        "🎉 LKPD selesai!\n\n" +
+
+        "Game menjodohkan sekarang terbuka. Cocokkan semua pasangan dengan benar untuk membuka kuis HOTS."
+
+    );
+
+}
+
+
+/* =====================================================
+   GAME MENJODOHKAN JENIS EKOSISTEM
+===================================================== */
+const matchSources = [
+    {id:"gurun", label:"Gurun", answer:"gurun"},
+    {id:"sabana", label:"Sabana", answer:"sabana"},
+    {id:"stepa", label:"Stepa", answer:"stepa"},
+    {id:"hutan", label:"Hutan hujan tropis", answer:"hutan"},
+    {id:"taiga", label:"Taiga", answer:"taiga"},
+    {id:"lotik", label:"Ekosistem lotik", answer:"lotik"},
+    {id:"buatan", label:"Ekosistem buatan", answer:"buatan"}
+];
+const matchTargets = [
+    {id:"taiga", label:"Hutan konifer di wilayah dingin; musim dingin panjang dan bersalju."},
+    {id:"buatan", label:"Dibuat atau dimodifikasi manusia dan biasanya memerlukan pengelolaan."},
+    {id:"hutan", label:"Curah hujan sangat tinggi, lembap, dan memiliki keanekaragaman hayati tinggi."},
+    {id:"gurun", label:"Curah hujan sangat rendah; tumbuhan beradaptasi untuk menghemat air."},
+    {id:"lotik", label:"Perairan tawar yang airnya mengalir, misalnya sungai."},
+    {id:"stepa", label:"Padang rumput dengan sedikit pohon dan curah hujan lebih rendah daripada sabana."},
+    {id:"sabana", label:"Padang rumput dengan pohon tersebar serta musim hujan dan kemarau yang jelas."}
+];
+let activeMatchSource = null;
+let matchPreviewPoint = null;
+
+function renderGame(){
+    const container = document.getElementById("gameContent");
+    if(!container) return;
+    if(!state.lkpdCompleted){
+        container.innerHTML = '<div class="lock-message">🔒 <strong>Game masih terkunci.</strong><p>Selesaikan dan simpan LKPD terlebih dahulu.</p></div>';
+        return;
+    }
+    if(state.gameCompleted){
+        container.innerHTML = '<div class="match-status success"><strong>🏆 Tantangan selesai!</strong><br>Semua pasangan sudah benar. Kuis HOTS telah terbuka. Kamu bisa melanjutkan ke bagian kuis.</div>';
+        return;
+    }
+    const left = matchSources.map((item,i)=>`<div class="match-card"><span class="match-dot" role="button" tabindex="0" aria-label="Mulai garis dari ${item.label}" id="match-source-${item.id}" onpointerdown="beginMatch(event,'${item.id}')" onkeydown="matchKeyboardStart(event,'${item.id}')"></span><span class="match-text"><strong>${i+1}. ${item.label}</strong></span></div>`).join('');
+    const right = matchTargets.map((item,i)=>`<div class="match-card"><span class="match-text">${String.fromCharCode(65+i)}. ${item.label}</span><span class="match-dot target" role="button" tabindex="0" aria-label="Pasangan ciri ${String.fromCharCode(65+i)}" data-match-target="${item.id}" onpointerup="finishMatchOnTarget(event,'${item.id}')" onkeydown="matchKeyboardTarget(event,'${item.id}')"></span></div>`).join('');
+    container.innerHTML = `
+        <p>Uji ketelitianmu! Jodohkan setiap jenis ekosistem dengan ciri-ciri yang tepat.</p>
+        <div class="match-instructions"><strong>🎯 Cara bermain</strong><br>Tekan dan tahan titik hijau di samping jenis ekosistem, lalu tarik garis menuju titik kuning pada ciri yang sesuai. Semua pasangan harus benar sebelum kuis HOTS terbuka. Di layar sentuh, kamu juga bisa memilih titik hijau lalu mengetuk titik kuning.</div>
+        <div class="match-board" id="matchBoard">
+            <svg class="match-lines" id="matchLines" aria-hidden="true"><path id="matchPreview" class="preview" d="" style="display:none"></path></svg>
+            <div class="match-column"><h3>Jenis ekosistem</h3>${left}</div>
+            <div class="match-column"><h3>Ciri-ciri ekosistem</h3>${right}</div>
+        </div>
+        <div id="matchStatus" class="match-status" aria-live="polite">Pasangan terhubung: ${Object.keys(state.gameMatches||{}).length} dari ${matchSources.length}. Tarik garis untuk mulai.</div>
+        <div class="match-actions"><button class="complete-btn" type="button" onclick="checkMatchingGame()">✓ Periksa Pasangan</button><button class="match-secondary" type="button" onclick="resetMatchingGame()">Ulangi dari awal</button></div>
+    `;
+    requestAnimationFrame(renderMatchingLines);
+}
+
+function beginMatch(event, sourceId){
+    if(event) event.preventDefault();
+    activeMatchSource = sourceId;
+    matchPreviewPoint = event ? {x:event.clientX,y:event.clientY} : null;
+    renderMatchingLines();
+}
+function matchKeyboardStart(event, sourceId){
+    if(event.key === "Enter" || event.key === " "){
+        event.preventDefault(); activeMatchSource = sourceId;
+        const status = document.getElementById("matchStatus");
+        if(status) status.textContent = "Pilih titik kuning pada ciri yang cocok dengan " + matchSources.find(x=>x.id===sourceId).label + ".";
+    }
+}
+function matchKeyboardTarget(event, targetId){
+    if((event.key === "Enter" || event.key === " ") && activeMatchSource){
+        event.preventDefault(); setMatch(activeMatchSource,targetId); activeMatchSource = null;
+    }
+}
+function finishMatchOnTarget(event,targetId){
+    if(activeMatchSource){
+        event.preventDefault(); event.stopPropagation();
+        setMatch(activeMatchSource,targetId); activeMatchSource = null; matchPreviewPoint = null;
+    }
+}
+function setMatch(sourceId,targetId){
+    state.gameMatches = {...(state.gameMatches||{}),[sourceId]:targetId};
+    state.gameCompleted = false;
+    saveState();
+    renderGame();
+}
+function pointInBoard(el, boardRect){
+    const r=el.getBoundingClientRect();
+    return {x:r.left+r.width/2-boardRect.left,y:r.top+r.height/2-boardRect.top};
+}
+function renderMatchingLines(){
+    const board=document.getElementById("matchBoard"), svg=document.getElementById("matchLines");
+    if(!board||!svg) return;
+    const rect=board.getBoundingClientRect();
+    svg.setAttribute("viewBox",`0 0 ${rect.width} ${rect.height}`);
+    svg.setAttribute("width",rect.width); svg.setAttribute("height",rect.height);
+    let paths='';
+    Object.entries(state.gameMatches||{}).forEach(([source,target])=>{
+        const a=document.getElementById("match-source-"+source);
+        const b=document.querySelector(`[data-match-target="${target}"]`);
+        if(!a||!b) return;
+        const p1=pointInBoard(a,rect),p2=pointInBoard(b,rect);
+        paths+=`<path d="M ${p1.x} ${p1.y} C ${p1.x+35} ${p1.y}, ${p2.x-35} ${p2.y}, ${p2.x} ${p2.y}" />`;
+    });
+    svg.innerHTML=paths+'<path id="matchPreview" class="preview" d="" style="display:none"></path>';
+    if(activeMatchSource && matchPreviewPoint){
+        const a=document.getElementById("match-source-"+activeMatchSource);
+        if(a){
+            const p1=pointInBoard(a,rect), p2={x:matchPreviewPoint.x-rect.left,y:matchPreviewPoint.y-rect.top};
+            const preview=svg.querySelector("#matchPreview");
+            if(preview){preview.setAttribute("d",`M ${p1.x} ${p1.y} C ${p1.x+35} ${p1.y}, ${p2.x-35} ${p2.y}, ${p2.x} ${p2.y}`);preview.style.display="block";}
+        }
+    }
+}
+function checkMatchingGame(){
+    const matches=state.gameMatches||{};
+    const count=matchSources.filter(x=>matches[x.id]===x.answer).length;
+    const status=document.getElementById("matchStatus");
+    if(count===matchSources.length && Object.keys(matches).length===matchSources.length){
+        state.gameCompleted=true; saveState(); updateInterface();
+        alert("🎉 Hebat! Semua pasangan benar. Kuis HOTS sekarang terbuka.");
+        document.getElementById("quizSection")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }else{
+        state.gameCompleted=false; saveState();
+        if(status){status.className="match-status retry";status.innerHTML=`Belum semua tepat: <strong>${count} dari ${matchSources.length}</strong> pasangan benar. Periksa lagi garis yang sudah kamu buat, lalu coba kembali.`;}
+    }
+}
+function resetMatchingGame(){
+    state.gameMatches={}; state.gameCompleted=false; activeMatchSource=null; matchPreviewPoint=null;
+    saveState(); updateInterface();
+}
+window.addEventListener("pointermove",event=>{
+    if(activeMatchSource){matchPreviewPoint={x:event.clientX,y:event.clientY};renderMatchingLines();}
+});
+window.addEventListener("pointerup",event=>{
+    if(!activeMatchSource) return;
+    const target=document.elementFromPoint(event.clientX,event.clientY)?.closest?.("[data-match-target]");
+    if(target){setMatch(activeMatchSource,target.dataset.matchTarget);}
+    activeMatchSource=null; matchPreviewPoint=null; renderMatchingLines();
+});
+window.addEventListener("resize",renderMatchingLines);
+
+
+/* =====================================================
+   DATA KUIS HOTS
+===================================================== */
+
+const quizQuestions = [
+    { question: "Ekosistem terbentuk dari hubungan timbal balik antara...", options: ["Hanya hewan dan tumbuhan", "Makhluk hidup dan lingkungan abiotiknya", "Hanya tanah dan air", "Manusia dan bangunan saja", "Hanya produsen"], answer: 1 },
+    { question: "Tumbuhan hijau yang menghasilkan makanan dalam ekosistem berperan sebagai...", options: ["Konsumen", "Predator", "Produsen", "Dekomposer", "Parasit"], answer: 2 },
+    { question: "Berikut yang termasuk komponen abiotik adalah...", options: ["Rumput", "Ikan", "Jamur", "Cahaya matahari", "Bakteri"], answer: 3 },
+    { question: "Ekosistem darat dengan curah hujan sangat rendah, suhu siang sangat panas, dan tumbuhan tahan kekeringan adalah...", options: ["Sabana", "Tundra", "Gurun", "Hutan gugur", "Taiga"], answer: 2 },
+    { question: "Wilayah padang rumput dengan pohon tersebar, serta musim hujan dan kemarau yang jelas, disebut...", options: ["Sabana", "Stepa", "Gurun", "Taiga", "Tundra"], answer: 0 },
+    { question: "Ciri yang paling sesuai dengan hutan hujan tropis adalah...", options: ["Tanah beku permanen", "Curah hujan sangat tinggi dan keanekaragaman spesies tinggi", "Curah hujan di bawah 250 mm per tahun", "Hampir tidak ada tumbuhan", "Musim dingin panjang bersalju"], answer: 1 },
+    { question: "Ekosistem air tawar yang airnya mengalir seperti sungai termasuk jenis...", options: ["Lentik", "Lotik", "Oseanik", "Abisal", "Litoral"], answer: 1 },
+    { question: "Perbedaan utama air laut dan air tawar berdasarkan materi adalah...", options: ["Air laut selalu lebih dingin", "Air tawar tidak memiliki organisme", "Kadar garam air laut jauh lebih tinggi", "Air tawar selalu mengalir", "Air laut tidak memiliki produsen"], answer: 2 },
+    { question: "Sawah dan kolam ikan yang dibuat serta dikelola manusia termasuk...", options: ["Ekosistem tundra", "Ekosistem alami", "Ekosistem buatan", "Ekosistem taiga", "Ekosistem gurun"], answer: 2 },
+    { question: "Penggunaan pestisida secara berlebihan di ekosistem pertanian dapat menyebabkan...", options: ["Keanekaragaman hayati selalu meningkat", "Pencemaran dan terganggunya organisme bukan sasaran", "Semua hama langsung punah tanpa dampak lain", "Air dan tanah tidak berubah", "Ekosistem tidak lagi memerlukan pengelolaan"], answer: 1 }
+];
+
+
+/* =====================================================
+   RENDER QUIZ
+===================================================== */
+
+function renderQuiz(){
+
+    const container =
+        document.getElementById(
+            "quizContent"
+        );
+
+
+    const scoreBox =
+        document.getElementById(
+            "quizScore"
+        );
+
+
+    if(
+        (!state.lkpdCompleted || !state.gameCompleted)
+    ){
+
+        container.innerHTML = `
+
+            <div class="lock-message">
+
+                🔒 <strong>
+                    Kuis masih terkunci.
+                </strong>
+
+                <p>
+                    Selesaikan LKPD, lalu jawab semua pasangan pada game dengan benar.
+                </p>
+
+            </div>
+
+        `;
+
+
+        scoreBox.style.display =
+            "none";
+
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <p>
+
+            Jawablah seluruh pertanyaan berikut.
+            Setiap soal memiliki satu jawaban paling tepat.
+
+        </p>
+
+    `;
+
+
+    quizQuestions.forEach(
+
+        (q,index) => {
+
+            html += `
+
+                <div class="quiz-question">
+
+                    <h4>
+                        ${index + 1}.
+                        ${q.question}
+                    </h4>
+
+            `;
+
+
+            q.options.forEach(
+
+                (option,optionIndex) => {
+
+                    html += `
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q${index}"
+                                value="${optionIndex}"
+                                ${(Number(state.quizAnswers[index]) === optionIndex && state.quizAnswers[index] !== "" && state.quizAnswers[index] !== null && state.quizAnswers[index] !== undefined) ? "checked" : ""}
+                            >
+
+                            ${String.fromCharCode(
+                                65 + optionIndex
+                            )}.
+
+                            ${option}
+
+                        </label>
+
+                    `;
+
+                }
+
+            );
+
+
+            html += `
+
+                </div>
+
+            `;
+
+        }
+
+    );
+
+
+    html += `
+
+        <button
+            class="complete-btn"
+            onclick="submitQuiz()">
+
+            ✓ Kirim Jawaban Kuis
+
+        </button>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+
+    if(
+        state.quizScore !== null
+    ){
+
+        scoreBox.style.display =
+            "block";
+
+
+        scoreBox.textContent =
+            "🏆 Nilai Kuis: " +
+            state.quizScore;
+
+    }
+
+}
+
+
+/* =====================================================
+   SUBMIT QUIZ
+===================================================== */
+
+function submitQuiz(){
+
+    const answers =
+        [];
+
+
+    for(
+        let i = 0;
+        i < quizQuestions.length;
+        i++
+    ){
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+
+        if(!selected){
+
+            alert(
+                "⚠️ Silakan jawab semua soal terlebih dahulu."
+            );
+
+
+            return;
+
+        }
+
+
+        answers[i] =
+            Number(
+                selected.value
+            );
+
+    }
+
+
+    let correct =
+        0;
+
+
+    quizQuestions.forEach(
+
+        (question,index) => {
+
+            if(
+                answers[index] ===
+                question.answer
+            ){
+
+                correct++;
+
+            }
+
+        }
+
+    );
+
+
+    const score =
+        correct * 10;
+
+
+    state.quizScore =
+        score;
+
+
+    state.quizAnswers =
+        answers;
+
+
+    saveState();
+
+    updateInterface();
+
+
+    alert(
+
+        "🎉 Kuis selesai!\n\n" +
+
+        "Jawaban benar: " +
+
+        correct +
+
+        " dari " +
+
+        quizQuestions.length +
+
+        "\nNilai: " +
+
+        score
+
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE SEMUA
+===================================================== */
+
+function updateInterface(){
+
+    updateLessons();
+
+    updateMenu();
+
+    updateProgress();
+
+    updateActivities();
+
+    renderVideo();
+
+    renderLKPD();
+
+    renderGame();
+
+    renderQuiz();
+
+
+    /*
+     * Isi kembali jawaban HOTS
+     * setelah halaman diperbarui.
+     */
+
+    for(
+        let i = 1;
+        i <= 4;
+        i++
+    ){
+
+        const input =
+            document.querySelector(
+                `[data-hots="${i}"]`
+            );
+
+
+        if(input){
+
+            input.value =
+                state.hotsAnswers[i] || "";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   NAVIGASI MENU
+===================================================== */
+
+document.querySelectorAll(
+    ".menu-item"
+).forEach(
+
+    menu => {
+
+        menu.addEventListener(
+            "click",
+
+            function(event){
+
+                if(
+                    this.classList.contains(
+                        "locked"
+                    )
+                ){
+
+                    event.preventDefault();
+
+
+                    alert(
+
+                        "🔒 Bagian ini masih terkunci.\n\n" +
+
+                        "Selesaikan kegiatan sebelumnya terlebih dahulu."
+
+                    );
+
+
+                    return;
+
+                }
+
+
+                document.querySelectorAll(
+                    ".menu-item"
+                ).forEach(
+
+                    item => {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+            }
+
+        );
+
+    }
+
+);
+
+
+/* =====================================================
+   AUTO SAVE TEXTAREA HOTS
+===================================================== */
+
+document.addEventListener(
+    "input",
+
+    function(event){
+
+        if(
+            event.target.matches(
+                "[data-hots]"
+            )
+        ){
+
+            saveHOTSAnswer(
+                event.target
+            );
+
+        }
+
+    }
+
+);
+
+// Autosimpan jawaban video dan LKPD setiap kali siswa mengetik,
+// sehingga jawaban yang belum menekan tombol selesai tetap terkirim.
+document.addEventListener("input", function(event){
+    const field = event.target;
+    if (field.matches("[data-video]")) {
+        state.videoAnswers[Number(field.dataset.video)] = field.value;
+        saveState();
+    } else if (field.matches("[data-lkpd]")) {
+        state.lkpdAnswers[Number(field.dataset.lkpd)] = field.value;
+        saveState();
+    }
+});
+
+// Simpan pilihan kuis setiap kali siswa memilih jawaban.
+document.addEventListener("change", function(event){
+    const field = event.target;
+    if (field.matches('input[type="radio"][name^="q"]')) {
+        const questionIndex = Number(field.name.slice(1));
+        state.quizAnswers[questionIndex] = Number(field.value);
+        saveState();
+    }
+});
+
+
+/* =====================================================
+   INISIALISASI
+===================================================== */
+
+loadState();
+
+
+/*
+ * Pastikan jawaban HOTS
+ * muncul kembali.
+ */
+
+document.querySelectorAll(
+    "[data-hots]"
+).forEach(
+
+    input => {
+
+        const id =
+            Number(
+                input.dataset.hots
+            );
+
+
+        input.value =
+            state.hotsAnswers[id] || "";
+
+    }
+
+);
+
+
+updateInterface();
+
+
+/*
+ * Materi pertama selalu terbuka.
+ */
+
+const firstLesson =
+    document.querySelector(
+        '.lesson[data-lesson="1"]'
+    );
+
+
+if(firstLesson){
+
+    firstLesson.classList.remove(
+        "locked"
+    );
+
+}
+
+
+
+/* =====================================================
+   CEGAH COPY/CUT/PASTE DARI MENU, SHORTCUT, DAN DRAG-DROP
+===================================================== */
+(function lockCopyPaste(){
+    // Cegah menu klik-kanan serta aksi clipboard di halaman.
+    document.addEventListener('contextmenu', function(event){
+        event.preventDefault();
+    }, true);
+
+    ['copy','cut','paste'].forEach(function(eventName){
+        document.addEventListener(eventName, function(event){
+            event.preventDefault();
+            if(eventName === 'paste') {
+                const target = event.target;
+                if(target && (target.matches('input, textarea') || target.isContentEditable)) {
+                    target.setAttribute('data-paste-blocked','true');
+                }
+            }
+        }, true);
+    });
+
+    // Blokir tempel teks dari clipboard, termasuk pada kolom jawaban.
+    document.addEventListener('beforeinput', function(event){
+        if(event.inputType === 'insertFromPaste' || event.inputType === 'insertFromDrop') {
+            event.preventDefault();
+        }
+    }, true);
+    document.addEventListener('drop', function(event){
+        event.preventDefault();
+    }, true);
+    document.addEventListener('dragover', function(event){
+        event.preventDefault();
+    }, true);
+
+    // Blokir shortcut umum copy/cut/paste pada Windows, Mac, dan keyboard alternatif.
+    document.addEventListener('keydown', function(event){
+        const key = (event.key || '').toLowerCase();
+        const mod = event.ctrlKey || event.metaKey;
+        const blocked = (mod && ['c','x','v'].includes(key)) ||
+                        (event.ctrlKey && key === 'insert') ||
+                        (event.shiftKey && key === 'insert');
+        if(blocked) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }, true);
+})();
+
+</script>
+
+</body>
+</html>
